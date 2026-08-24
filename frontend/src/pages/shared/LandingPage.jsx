@@ -110,18 +110,45 @@ const LandingPage = () => {
   };
   //to fetch properties
 
+  // const fetchProperties = async (search = "") => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await axios.get(`${API_URL}/api/property?city=${search}`);
+  //     setProperties(res.data.properties || res.data || []);
+  //     setError(null);
+  //   } catch (error) {
+  //     setError("Failed to load properties. Please try again");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const fetchProperties = async (search = "") => {
-    try {
-      setLoading(true);
-      const res = await axios.get(`${API_URL}/api/property?city=${search}`);
-      setProperties(res.data.properties || res.data || []);
-      setError(null);
-    } catch (error) {
-      setError("Failed to load properties. Please try again");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+
+    const res = await axios.get(`${API_URL}/api/property?city=${search}`);
+
+    console.log("PROPERTY API RESPONSE:", res.data);
+
+    const propertyData = Array.isArray(res.data)
+      ? res.data
+      : Array.isArray(res.data.properties)
+        ? res.data.properties
+        : Array.isArray(res.data.data)
+          ? res.data.data
+          : [];
+
+    setProperties(propertyData);
+    setError(null);
+  } catch (error) {
+    console.error("Failed to fetch properties:", error);
+    setProperties([]);
+    setError("Failed to load properties. Please try again");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleSearch = (e) => {
     e.preventDefault();
