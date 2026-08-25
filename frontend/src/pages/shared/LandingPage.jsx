@@ -578,11 +578,11 @@ const LandingPage = () => {
                 <span className="text-text-muted">Designed By</span>
 
                 <a
-                  href="https://hexagondigitalservices.com"
+                  href="/"
                   target="_blank"
                   className={s.designLink}
                 >
-                  Hexagon Digital Services
+                  Sahil Jakhar 
                 </a>
               </div>
             </div>
